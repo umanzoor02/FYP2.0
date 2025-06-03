@@ -11,19 +11,24 @@ import ChildDashboard from './pages/ChildDashboard';
 import HobbyPredictor from './pages/HobbyPredictor';
 import MentalHealthAssessment from './pages/MentalHealthAssessment';
 import PhysicalAssessment from './pages/PhysicalAssessment';
+import Home from './Home';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <Router>
+        <Navbar/>
       <Routes>
         <Route path="/" element={<StartPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/add-child" element={<AddChildForm />} />
         <Route path="/logout" element={<Logout />} />
 
-        {/* Old dashboard with all features (if still needed) */}
+        {/* Old dashboard with all features */}
         <Route path="/child/:childId" element={<ChildDashboard />} />
 
         {/* New structured child dashboard */}
@@ -32,6 +37,7 @@ function App() {
         <Route path="/child/:childId/dashboard/mental-health" element={<MentalHealthAssessment />} />
         <Route path="/child/:childId/dashboard/physical-health" element={<PhysicalAssessment />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

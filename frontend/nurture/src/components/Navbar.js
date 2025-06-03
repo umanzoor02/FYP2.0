@@ -6,22 +6,49 @@ const Navbar = () => {
   const token = localStorage.getItem('jwtToken');
 
   return (
-    <nav style={{ padding: '10px', background: '#eee' }}>
-      <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: '#e6e6fa' }} // light lavender
+    >
+      <div className="container-fluid">
+        <Link className="navbar-brand fw-bold text-dark" to="/">Nurture AI</Link>
 
-      {!token && (
-        <>
-          <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>
-          <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
-        </>
-      )}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-      {token && (
-        <>
-          <Link to="/add-child" style={{ marginRight: '10px' }}>Add Child</Link>
-          <Link to="/logout">Logout</Link>
-        </>
-      )}
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            {!token ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/register">Register</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/login">Login</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/add-child">Add Child</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/logout">Logout</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 };
