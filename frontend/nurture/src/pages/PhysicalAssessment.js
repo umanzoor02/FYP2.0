@@ -624,4 +624,4 @@ const PhysicalAssessment = () => {
   )
 }
 
-export default PhysicalAssessment
+export default PhysicalAssessment;
