@@ -147,6 +147,8 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+OPENAI_API_KEY="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"
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [

@@ -12,7 +12,7 @@ const ChildDashboard = () => {
       description:
         "Help your child explore new interests and discover hobbies that match their unique personality and talents.",
       icon: "🎨",
-      route: `/child/${childId}/dashboard/hobby`,
+      route: `/ask-ai`,
       gradientClass: "bg-gradient-purple-light",
       bgClass: "bg-purple-ultra-light",
     },
