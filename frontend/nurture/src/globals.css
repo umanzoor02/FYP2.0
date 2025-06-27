@@ -1,0 +1,96 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Custom gradient button styles */
+.btn-gradient {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #1e40af 100%);
+  border-radius: 50px !important;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.btn-gradient:focus {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+  color: white !important;
+  outline: none !important;
+}
+
+.btn-gradient:active {
+  transform: scale(0.95);
+}
+
+/* Gradient overlay effect */
+.gradient-overlay {
+  background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 50%, #1e3a8a 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50px;
+}
+
+.btn-gradient:hover .gradient-overlay {
+  opacity: 1;
+}
+
+/* Arrow animation */
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.btn-gradient:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Shine effect */
+.shine-effect {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  transform: translateX(-100%) skewX(-12deg);
+  transition: transform 1s ease;
+  opacity: 0;
+  border-radius: 50px;
+}
+
+.btn-gradient:hover .shine-effect {
+  opacity: 1;
+  transform: translateX(100%) skewX(-12deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn-gradient {
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-gradient {
+    padding: 0.625rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Remove Bootstrap button focus styles */
+.btn-gradient:focus,
+.btn-gradient:focus-visible {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Ensure text stays white */
+.btn-gradient,
+.btn-gradient:hover,
+.btn-gradient:focus,
+.btn-gradient:active {
+  color: white !important;
+}
+body {
+  background: transparent !important;
+}

@@ -5,7 +5,10 @@ import DeepSeekChat from '../components/DeepSeekChat';
 function DeepSeekChatPage() {
   return (
     <div style={{ padding: 20 }}>
-      <h2>Generate Quiz</h2>
+      <h2 className="text-center fw-bold my-4" style={{ color: '#7453DB' }}>
+  Educational Support
+</h2>
+
       <DeepSeekChat />
     </div>
   );

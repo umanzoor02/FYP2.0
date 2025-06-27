@@ -1,7 +1,7 @@
-/* Frontend: DeepSeekChat.jsx */
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DeepSeekChat() {
   const [selectedClass, setSelectedClass] = useState('');
@@ -31,14 +31,9 @@ function DeepSeekChat() {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/token/refresh/`, { refresh });
       localStorage.setItem('jwtToken', res.data.access);
-      console.log('Token refreshed:', res.data.access);
       return res.data.access;
     } catch (err) {
-      console.error('Token refresh error:', err.response?.data || err.message);
-      setError(
-        err.response?.data?.detail ||
-        'Failed to refresh token. Please log in again.'
-      );
+      setError(err.response?.data?.detail || 'Failed to refresh token. Please log in again.');
       navigate('/login');
       return null;
     }
@@ -92,7 +87,6 @@ function DeepSeekChat() {
 
       setQuiz(res.data.quiz);
     } catch (err) {
-      console.error('Generate quiz error:', err.response?.data || err.message);
       setError(
         err.response?.status === 401
           ? 'Authentication failed. Please log in again.'
@@ -140,13 +134,9 @@ function DeepSeekChat() {
         );
       }
 
-      // Expect answers as an array of { question_number, answer }
-      if (!Array.isArray(res.data.answers)) {
-        throw new Error('Invalid answer format from server.');
-      }
+      if (!Array.isArray(res.data.answers)) throw new Error('Invalid answer format from server.');
       setAnswers(res.data.answers);
     } catch (err) {
-      console.error('Get answers error:', err.response?.data || err.message);
       setError(
         err.response?.status === 401
           ? 'Authentication failed. Please log in again.'
@@ -167,156 +157,84 @@ function DeepSeekChat() {
 
   const renderQuizCards = () => {
     const questions = quiz.split(/\n(?=\d+\.)/).filter((q) => q.trim() !== '');
-    if (questions.length === 0) {
-      return <p style={{ color: 'red' }}>Error: Unable to parse quiz questions.</p>;
-    }
+    if (questions.length === 0) return <p className="text-danger">Error: Unable to parse quiz questions.</p>;
 
     return questions.map((question, index) => {
       const answerObj = answers.find((ans) => ans.question_number === index + 1);
       return (
-        <div
-          key={index}
-          style={{
-            background: '#ffffff',
-            border: '1px solid #ddd',
-            borderRadius: '10px',
-            padding: '15px',
-            marginBottom: '15px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          }}
-        >
-          <p style={{ marginBottom: '10px', fontWeight: '500' }}>{question}</p>
-          {answerObj && (
-            <div
-              style={{
-                color: 'green',
-                fontWeight: 'bold',
-                whiteSpace: 'pre-wrap', // Handle multi-line answers
-                marginTop: '10px',
-              }}
-            >
-              Answer: {answerObj.answer}
-            </div>
-          )}
+        <div className="card mb-3 shadow-sm" key={index}>
+          <div className="card-body">
+            <p className="card-text fw-medium">{question}</p>
+            {answerObj && <div className="text-success fw-bold mt-2">Answer: {answerObj.answer}</div>}
+          </div>
         </div>
       );
     });
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: 'auto', padding: 20, fontFamily: 'sans-serif' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: 20 }}>Generate a Personalized Quiz</h2>
+    <div className="container py-5">
+      
+
+      <h2 className="text-center mt-4 mb-4">Generate a Personalized Quiz</h2>
 
       {error && (
-        <div style={{ color: 'red', textAlign: 'center', marginBottom: 10 }}>
+        <div className="alert alert-danger text-center">
           {error}
           {error.includes('log in again') && (
-            <button
-              onClick={handleLogout}
-              style={{
-                marginLeft: 10,
-                padding: '5px 10px',
-                backgroundColor: '#dc3545',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 5,
-                cursor: 'pointer',
-              }}
-            >
-              Log Out
-            </button>
+            <button className="btn btn-sm btn-light ms-2" onClick={handleLogout}>Log Out</button>
           )}
         </div>
       )}
-      {loading && (
-        <div style={{ textAlign: 'center', marginBottom: 10 }}>Loading quiz...</div>
-      )}
-      {answerLoading && (
-        <div style={{ textAlign: 'center', marginBottom: 10 }}>Fetching answers...</div>
-      )}
 
-      <div style={{ marginBottom: 20, textAlign: 'center' }}>
+      {loading && <div className="text-center text-primary mb-3">Loading quiz...</div>}
+      {answerLoading && <div className="text-center text-primary mb-3">Fetching answers...</div>}
+
+      <div className="text-center mb-3">
         <select
-          aria-label="Select class"
+          className="form-select w-auto d-inline-block me-2"
           value={selectedClass}
           onChange={(e) => setSelectedClass(e.target.value)}
-          style={{
-            padding: 10,
-            fontSize: '1rem',
-            borderRadius: 5,
-            border: '1px solid #ccc',
-            marginRight: 10,
-          }}
         >
           <option value="">Select Class</option>
           {classes.map((cls) => (
-            <option key={cls} value={cls}>
-              Class {cls}
-            </option>
+            <option key={cls} value={cls}>Class {cls}</option>
           ))}
         </select>
 
-        {selectedClass &&
-          subjects.map((s) => (
-            <button
-              key={s.key}
-              onClick={() => handleGenerateQuiz(s.key)}
-              disabled={loading}
-              style={{
-                margin: '5px',
-                padding: '10px 15px',
-                backgroundColor: loading ? '#ccc' : '#007bff',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontSize: '1rem',
-              }}
-            >
-              {s.label}
-            </button>
-          ))}
+        {selectedClass && subjects.map((s) => (
+          <button
+            key={s.key}
+            className="btn btn-primary m-1"
+            onClick={() => handleGenerateQuiz(s.key)}
+            disabled={loading}
+            style={{ backgroundColor: '#7453DB', borderColor: '#7453DB' }}
+          >
+            {s.label}
+          </button>
+        ))}
       </div>
 
       {quiz && (
-        <div style={{ marginTop: 30 }}>
-          <h3 style={{ marginBottom: 20 }}>Quiz:</h3>
+        <div className="mt-4">
+          <h4 className="mb-3">Quiz:</h4>
           {renderQuizCards()}
-          <div style={{ textAlign: 'center' }}>
+          <div className="text-center mt-3">
             {!answers.length && (
               <button
+                className="btn btn-success m-2"
                 onClick={handleGetAnswers}
                 disabled={answerLoading}
-                style={{
-                  margin: '10px',
-                  padding: '10px 20px',
-                  backgroundColor: answerLoading ? '#ccc' : '#28a745',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 5,
-                  cursor: answerLoading ? 'not-allowed' : 'pointer',
-                }}
               >
                 Show Answers
               </button>
             )}
-            <button
-              onClick={handleReset}
-              style={{
-                margin: '10px',
-                padding: '10px 20px',
-                backgroundColor: '#dc3545',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 5,
-                cursor: 'pointer',
-              }}
-            >
-              Reset Quiz
-            </button>
+            <button className="btn btn-danger m-2" onClick={handleReset}>Reset Quiz</button>
           </div>
         </div>
       )}
+
+      
     </div>
   );
 }

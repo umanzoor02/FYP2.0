@@ -1,8 +1,12 @@
 "use client"
+import CommunityButton from './CommunityButton'; 
+import { useNavigate } from 'react-router-dom'; 
 
 import { useState, useEffect } from "react"
 
 const StartPage = () => {
+  const navigate = useNavigate()
+
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const slides = [
@@ -238,10 +242,11 @@ const StartPage = () => {
                 </p>
 
                 <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                  <button className="btn btn-gradient btn-lg px-4 py-3 fs-5 fw-semibold">Join Our Community →</button>
-                  <button className="btn btn-outline-purple btn-lg px-4 py-3 fs-5 fw-semibold">
-                    Learn How It Works
-                  </button>
+                  
+
+                  <CommunityButton />
+
+                  
                 </div>
               </div>
             </div>
@@ -253,8 +258,8 @@ const StartPage = () => {
           <div className="stats-section">
             <div className="row text-center">
               <div className="col-md-4 mb-4 mb-md-0">
-                <div className="stat-number">15K+</div>
-                <div className="stat-label">Active Caregivers</div>
+                <div className="stat-number">AI-Powered</div>
+                <div className="stat-label">Support</div>
               </div>
               <div className="col-md-4 mb-4 mb-md-0">
                 <div className="stat-number">24/7</div>
@@ -299,7 +304,28 @@ const StartPage = () => {
 
                               <h3 className="display-6 fw-bold mb-3 text-purple-dark">{slide.title}</h3>
                               <p className="lead text-muted mb-4">{slide.description}</p>
-                              <button className="btn btn-gradient fw-semibold">Get Started →</button>
+                              {slide.id === 1 ? (
+  // External link
+  <a
+    href="https://www.facebook.com/groups/704485105546898/?ref=share&mibextid=CTbP7E"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn btn-gradient fw-semibold"
+  >
+    Get Started →
+  </a>
+) : slide.id === 2 ? (
+  // Internal route to mental health resources
+  <a href="https://www.psychologytoday.com/us" className="btn btn-gradient fw-semibold">
+    Get Started →
+  </a>
+) : (
+  // Internal route to caregiver tracker
+  <a href="/caregiver-tracker" className="btn btn-gradient fw-semibold">
+    Get Started →
+  </a>
+)}
+
                             </div>
                           </div>
 
@@ -378,7 +404,7 @@ const StartPage = () => {
                 Join thousands of caregivers who have found strength, support, and hope in our community. Your journey
                 matters, and so do you.
               </p>
-              <button className="btn btn-gradient btn-lg px-4 py-3 fs-5 fw-semibold mb-3">
+              <button onClick={() => navigate('/register')} className="btn btn-gradient btn-lg px-4 py-3 fs-5 fw-semibold mb-3">
                 Start Your Journey Today
               </button>
               <div className="text-muted small">Free to join • No credit card required • Instant access</div>

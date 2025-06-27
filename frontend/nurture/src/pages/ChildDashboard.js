@@ -8,9 +8,9 @@ const ChildDashboard = () => {
   const dashboardFeatures = [
     {
       id: "hobby",
-      title: "Discover Hobbies",
+      title: "Problems Exercises",
       description:
-        "Help your child explore new interests and discover hobbies that match their unique personality and talents.",
+        "Help your child in gaining knowledge and polish his cognitive abilities.",
       icon: "🎨",
       route: `/ask-ai`,
       gradientClass: "bg-gradient-purple-light",
